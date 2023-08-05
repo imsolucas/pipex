@@ -23,11 +23,11 @@ OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS_MAIN) 
-		 $(ARRC) $(NAME) $(OBJS_MAIN)
+		@$(ARRC) $(NAME) $(OBJS_MAIN)
 bonus: $(OBJS_MAIN) $(OBJS_BONUS)
-		$(ARRC) $(NAME) $(OBJS_BONUS)
+		@$(ARRC) $(NAME) $(OBJS_BONUS)
 clean:
-		$(RM) $(OBJS_MAIN) $(OBJS_BONUS)
+	$(RM) $(OBJS_MAIN) $(OBJS_BONUS)
 fclean: clean
 		$(RM) $(NAME)
 re: fclean $(NAME)
