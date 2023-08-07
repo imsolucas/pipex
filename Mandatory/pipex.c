@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/05 15:26:09 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/07 17:13:21 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ int	main(int argc, char **argv, char **envp)
 	if (pipex.pid == -1)
 		error_exit(FORK_FAIL);
 	if (pipex.pid == 0)
-		child_process(pipex, argv, envp);
-	parent_process(pipex, argv, envp);
+		child_process(pipex, argv[2], envp, argv[1]);
+	parent_process(pipex, argv[3], envp, argv[4]);
 }

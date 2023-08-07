@@ -1,6 +1,6 @@
 NAME = pipex
 GCC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 SRCS = Mandatory/pipex.c Mandatory/pipex_utils.c Mandatory/execution.c Mandatory/pipex_utils2.c
 OBJS = $(SRCS:.c=.o)

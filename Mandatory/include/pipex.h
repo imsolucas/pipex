@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:40:34 by djin              #+#    #+#             */
-/*   Updated: 2023/08/06 02:04:53 by lucas            ###   ########.fr       */
+/*   Updated: 2023/08/07 17:35:55 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,13 @@ typedef struct s_pipex
 	char	**split_cmd;
 	char	*cmd_path;
 	char	**result;
-	char	*junk;
 	pid_t	pid;
 }			t_pipex;
 
-void	parent_process(t_pipex pipe, char **argv, char **envp);
-void	child_process(t_pipex pipe, char **arg, char **envp);
+void	parent_process(t_pipex pipe, char *argv, char **envp, char *outfile);
+void	child_process(t_pipex pipe, char *argv, char **envp, char *infile);
 char	*find_cmd_path(char *cmd, char **envp, t_pipex *pipe);
-char	**split_string(t_pipex pipe, int word, int i_copy, int i);
+char	**split_string(t_pipex pipe);
 int		len_quotes(char *str);
 int		check_quotes(char quotes);
 void	execute(char *cmd, char **envp);
