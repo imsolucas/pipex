@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/08/07 17:32:19 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/08 14:27:34 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ void	parent_process(t_pipex pipe, char *argv, char **envp, char *outfile)
 	execute(argv, envp);
 }
 
-int	check_quotes(char quotes)
+int	checker(char c)
 {
-	if (quotes == '\"' || quotes == '\'')
+	if (c == ' ' || c == '\t')
+		return (0);
+	if (c == '\'' || c == '\"')
 		return (1);
-	return (0);
+	return (2);
 }
 
 int	len_quotes(char *str)

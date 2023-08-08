@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:40:34 by djin              #+#    #+#             */
-/*   Updated: 2023/08/07 17:35:55 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/08 14:25:41 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	child_process(t_pipex pipe, char *argv, char **envp, char *infile);
 char	*find_cmd_path(char *cmd, char **envp, t_pipex *pipe);
 char	**split_string(t_pipex pipe);
 int		len_quotes(char *str);
-int		check_quotes(char quotes);
 void	execute(char *cmd, char **envp);
+int		checker(char c);
 void	free_string(char **str);
 void	error_exit(char *str);
 
