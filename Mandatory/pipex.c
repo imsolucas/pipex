@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/07 17:13:21 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/08 15:03:28 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	// printf("%s\n", find_cmd_path(argv[2], envp, &pipex));
 	if (argc != 5)
 		error_exit("Wrong arguments");
 	if (pipe((int *)(pipex.fd)) == -1)

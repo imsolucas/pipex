@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 19:38:07 by djin              #+#    #+#             */
-/*   Updated: 2023/08/08 14:44:36 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/08 15:03:03 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,39 +40,6 @@ char	**split_string(t_pipex pipe)
 	pipe.result[word] = NULL;
 	return (pipe.result);
 }
-
-// char	**split_string(t_pipex pipe)
-// {
-// 	int	i;
-// 	int	word;
-// 	int	idx;
-
-// 	i = 0;
-// 	word = 0;
-// 	idx = 0;
-// 	while (pipe.cmd[i] != '\0')
-// 	{
-// 		if (check_quotes(pipe.cmd[i]) == 1)
-// 			i++;
-// 		if (check_quotes(pipe.cmd[i]) == 0)
-// 		{
-// 			if (idx > 0)
-// 			{
-// 				pipe.result[word][idx] = '\0';
-// 				word++;
-// 				pipe.result[word] = malloc(ft_strlen(pipe.cmd) * sizeof(char));
-// 				idx = 0;
-// 			}
-// 		}
-// 		else
-// 			pipe.result[word][idx++] = pipe.cmd[i];
-// 		i++;
-// 	}
-// 	if (idx > 0)
-// 		pipe.result[word++][idx] = '\0';
-// 	pipe.result[word] = NULL;
-// 	return (pipe.result);
-// }
 
 char	*find_cmd_path(char *cmd, char **envp, t_pipex *pipe)
 {
@@ -113,5 +80,4 @@ void	execute(char *cmd, char **envp)
 		error_exit("wrong command");
 	if (execve(pipe.cmd_path, pipe.split_cmd, envp) < 0)
 		error_exit("Cannot execute");
-	// execve(pipe.cmd_path, pipe.split_cmd, envp);
 }
