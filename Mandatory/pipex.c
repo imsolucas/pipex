@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/10 11:21:48 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/10 11:42:25 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	if (argc < 2)
+	if (argc != 5)
 		error_exit("Wrong Arguement");
 	if (pipe((int *)(pipex.fd)) == -1)
 		error_exit("Pipe");
