@@ -6,11 +6,11 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 19:38:07 by djin              #+#    #+#             */
-/*   Updated: 2023/08/10 10:36:19 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/09 18:33:33 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/pipex.h"
+#include "include/pipex_bonus.h"
 
 char	**split_string(t_pipex pipe)
 {

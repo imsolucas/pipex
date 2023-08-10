@@ -1,3 +1,14 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: djin <djin@student.42.fr>                  +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/08/09 13:08:20 by djin              #+#    #+#              #
+#    Updated: 2023/08/09 18:20:48 by djin             ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 SRCS_MAIN	 =	ft_atoi.c ft_bzero.c ft_isalnum.c \
 				ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
@@ -12,7 +23,7 @@ SRCS_BONUS	=	ft_lstdelone.c ft_lstiter.c ft_lstmap.c \
 				ft_lstnew.c ft_lstadd_back.c ft_lstadd_front.c \
 				ft_lstclear.c ft_lstsize.c ft_lstlast.c \
 
-GCC			= cc
+GCC			= gcc
 CFLAGS		= -Wall -Werror -Wextra
 NAME		= libft.a
 ARRC		= ar rc
@@ -20,16 +31,33 @@ RM			= rm -f
 OBJS_MAIN	= $(SRCS_MAIN:.c=.o)
 OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
 
+# Colors and text formatting
+RESET = \033[0m
+BOLD = \033[1m
+DIM = \033[2m
+UNDERLINE = \033[4m
+BLINK = \033[5m
+INVERT = \033[7m
+LIGHT_BLUE = \033[94m
+YELLOW = \033[93m
+
 all: $(NAME)
 
-$(NAME): $(OBJS_MAIN) 
-		@$(ARRC) $(NAME) $(OBJS_MAIN)
+%.o: %.c
+	@$(GCC) -c $(CFLAGS) $< -o ${<:.c=.o}
+
+$(NAME): $(OBJS_MAIN)
+	@$(ARRC) $(NAME) $(OBJS_MAIN)
+
 bonus: $(OBJS_MAIN) $(OBJS_BONUS)
-		@$(ARRC) $(NAME) $(OBJS_BONUS)
+	@$(ARRC) $(NAME) $(OBJS_BONUS)
+
 clean:
-	$(RM) $(OBJS_MAIN) $(OBJS_BONUS)
+	@$(RM) $(OBJS_MAIN) $(OBJS_BONUS)
+
 fclean: clean
-		$(RM) $(NAME)
+	@$(RM) $(NAME)
+
 re: fclean $(NAME)
 
 .PHONY: all clean re bonus fclean
