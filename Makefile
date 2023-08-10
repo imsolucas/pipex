@@ -3,6 +3,8 @@ GCC = gcc
 FLAGS = -Wall -Wextra -Werror -ggdb -fsanitize=address
 
 SRCS = Mandatory/pipex.c Mandatory/pipex_utils.c Mandatory/execution.c Mandatory/pipex_utils2.c
+BONUS_SRCS = Bonus/pipex_bonus.c Bonus/pipex_bonus_utils.c Bonus/execution.c
+BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_MAKE = make all -C libft
@@ -26,22 +28,24 @@ all: $(NAME)
 	@$(GCC) -c $(CFLAGS) $< -o ${<:.c=.o}
 
 $(NAME): $(OBJS)
+	@${RM} $(BONUS_OBJS)
 	@$(LIBFT_MAKE)
 	@$(LIBFT_CP)
 	@$(GCC) $(FLAGS) -o $(NAME) $(OBJS) libft.a
 	@echo "\n\n"
 	@echo "$(YELLOW)now just ./pipex infile "cmd" "cmd2" outfile$(RESET)"
 
-# bonus: ${BONUS_OBJS}
-# 	${RM} $(OBJS)
-# 	$(LIBFT_MAKE)
-# 	$(LIBFT_CP)
-# 	$(GNL_MAKE)
-# 	$(GNL_CP)
-# 	$(GCC) $(FLAGS) -o $(NAME) $(BONUS_OBJS) libft.a gnl.a
+bonus: ${BONUS_OBJS}
+	@${RM} $(OBJS)
+	@$(LIBFT_MAKE)
+	@$(LIBFT_CP)
+	@$(GCC) $(FLAGS) -o $(NAME) $(BONUS_OBJS) libft.a
+	@echo "\n\n"
+	@echo "$(YELLOW)now just ./pipex infile "cmd" "cmd2" outfile$(RESET)"
 
 clean:
 	@$(RM) $(OBJS)
+	@$(RM) $(BONUS_OBJS)
 
 fclean:
 	@echo "$(BOLD)$(LIGHT_BLUE)Cleaning all .o files...$(REST)\n"
@@ -52,6 +56,8 @@ fclean:
 	@echo "\n$(BOLD)$(YELLOW)Clean Successfully$(RESET)"
 
 re: fclean all
+
+re_bonus: fclean bonus
 
 files:
 	@touch infile
@@ -64,4 +70,4 @@ clean_files:
 	@rm outfile
 	@echo "$(BOLD)$(YELLOW)removed successfully :D$(RESET)"
 
-.PHONY: all clean fclean re files bonus clean_files
+.PHONY: all clean fclean re files bonus clean_files re_bonus

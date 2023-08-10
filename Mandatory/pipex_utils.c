@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/08/08 15:04:00 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/10 09:23:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,6 @@ int	checker(char c)
 	if (c == '\'' || c == '\"')
 		return (1);
 	return (2);
-}
-
-int	len_quotes(char *str)
-{
-	int	i;
-
-	if (!str || !(*str))
-		return (0);
-	i = 0;
-	while (str[i] != '\"' && str[i] != '\'' && str[i])
-		i++;
-	return (i);
 }
 
 void	free_string(char **str)

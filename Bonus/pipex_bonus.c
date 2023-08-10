@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/09 19:30:41 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/10 09:35:57 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/pipex_bonus.h"
+
+void	open_fd(t_pipex *pipe, char **argv, int argc)
+{
+	pipe->outfile = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT, 0664);
+	if (pipe->outfile < 0)
+		error_exit(argv[argc - 1]);
+	pipe->infile = open(argv[1], O_RDONLY);
+	if (pipe->infile < 0)
+		error_exit(argv[1]);
+	dup2(pipe->infile, STDIN_FILENO);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -22,25 +33,23 @@ int	main(int argc, char **argv, char **envp)
 	len = 0;
 	if (argc < 5)
 		error_exit("Wrong arguments");
-	if (pipe((int *)(pipex.fd)) == -1)
-		error_exit("Pipe");
+	open_fd(&pipex, argv, argc);
+	i = 2;
 	while (argv[i] && i > 1 && i <= len)
 	{
+		if (pipe((int *)(pipex.fd)) == -1)
+			error_exit("Pipe ");
 		if (i == argc - 2)
 			dup2(pipex.outfile, STDOUT_FILENO);
 		pipex.pid = fork();
 		if (pipex.pid == -1)
 			error_exit(FORK_FAIL);
 		if (pipex.pid == 0)
-			child_process(pipex, argv[i], envp);
-		parent_process(pipex, argv[i], envp);
-		dup2(pipex.fd[0], STDIN_FILENO);
+			child_process(pipex, argv[i], envp, argv[1]);
+		else
+			parent_process(pipex, argv[i], envp, argv[argc -1]);
 		i++;
 	}
-	// pipex.pid = fork();
-	// if (pipex.pid == -1)
-	// 	error_exit(FORK_FAIL);
-	// if (pipex.pid == 0)
-	// 	child_process(pipex, argv[2], envp, argv[1]);
-	// parent_process(pipex, argv[3], envp, argv[4]);
+	dup2(pipex.outfile, STDOUT_FILENO);
+	execute(argv[argc - 2], envp);
 }

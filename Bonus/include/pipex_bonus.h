@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:40:34 by djin              #+#    #+#             */
-/*   Updated: 2023/08/09 18:33:25 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/10 09:28:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	execute(char *cmd, char **envp);
 int		checker(char c);
 void	free_string(char **str);
 void	error_exit(char *str);
+void	open_fd(t_pipex *pipe, char **argv, int argc);
 
 #endif
