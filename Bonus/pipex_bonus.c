@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/10 09:35:57 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/10 17:50:58 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@ int	main(int argc, char **argv, char **envp)
 		error_exit("Wrong arguments");
 	open_fd(&pipex, argv, argc);
 	i = 2;
-	while (argv[i] && i > 1 && i <= len)
+	while (i < (argc - 2))
 	{
-		if (pipe((int *)(pipex.fd)) == -1)
+		if (pipe((pipex.fd)) == -1)
 			error_exit("Pipe ");
-		if (i == argc - 2)
-			dup2(pipex.outfile, STDOUT_FILENO);
 		pipex.pid = fork();
 		if (pipex.pid == -1)
 			error_exit(FORK_FAIL);

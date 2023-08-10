@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/08/10 09:22:51 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/10 17:54:42 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	child_process(t_pipex pipe, char *argv, char **envp, char *infile)
 {
-	// pipe.infile = open(infile, O_RDONLY);
-	dup2(pipe.fd[1], STDOUT_FILENO);
 	close(pipe.fd[0]);
+	dup2(pipe.fd[1], STDOUT_FILENO);
+	// close(pipe.fd[0]);
 	execute(argv, envp);
 }
 
@@ -25,9 +25,8 @@ void	parent_process(t_pipex pipe, char *argv, char **envp, char *outfile)
 	int	status;
 
 	waitpid(-1, &status, 0);
-	// pipe.outfile = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0777);
-	dup2(pipe.fd[0], STDIN_FILENO);
 	close(pipe.fd[1]);
+	dup2(pipe.fd[0], STDIN_FILENO);
 }
 
 int	checker(char c)
