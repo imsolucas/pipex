@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/08/10 17:54:42 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/11 19:12:16 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 void	child_process(t_pipex pipe, char *argv, char **envp, char *infile)
 {
-	close(pipe.fd[0]);
+	if (pipe.idx == 3)
+		close(pipe.fd[0]);
+	else
+		close(pipe.fd[1]);
 	dup2(pipe.fd[1], STDOUT_FILENO);
-	// close(pipe.fd[0]);
 	execute(argv, envp);
 }
 
@@ -41,7 +43,7 @@ int	checker(char c)
 void	error_exit(char *str)
 {
 	perror(str);
-	exit(0);
+	exit(1);
 }
 
 void	free_string(char **str)
