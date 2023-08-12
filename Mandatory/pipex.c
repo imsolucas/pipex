@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/12 12:51:07 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/12 15:04:11 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex	pipex;
 
 	if (argc != 5)
-		error_exit("Wrong Arguement");
+		perror("Wrong Arguments");
 	if (pipe((int *)(pipex.fd)) == -1)
 		error_exit("Pipe");
 	pipex.pid = fork();
