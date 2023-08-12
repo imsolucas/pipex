@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:40:34 by djin              #+#    #+#             */
-/*   Updated: 2023/08/11 14:24:59 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/12 13:00:00 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,19 @@ typedef struct s_pipex
 	pid_t	pid;
 }			t_pipex;
 
+//processes
 void	parent_process(t_pipex pipe, char *argv, char **envp, char *outfile);
 void	child_process(t_pipex pipe, char *argv, char **envp, char *infile);
+
+//execution
 char	*find_cmd_path(char *cmd, char **envp, t_pipex *pipe);
 char	**split_string(t_pipex pipe);
 void	execute(char *cmd, char **envp);
+
+//utils
 int		checker(char c);
 void	free_string(char **str);
 void	error_exit(char *str);
-void	open_fd(t_pipex *pipe, char **argv, int argc);
+void	open_in_and_out(t_pipex *pipe, char **argv, int argc);
 
 #endif

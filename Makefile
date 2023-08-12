@@ -2,7 +2,7 @@ NAME = pipex
 GCC = gcc
 FLAGS = -Wall -Wextra -Werror -ggdb -fsanitize=address
 
-SRCS = Mandatory/pipex.c Mandatory/pipex_utils.c Mandatory/execution.c Mandatory/pipex_utils2.c
+SRCS = Mandatory/pipex.c Mandatory/pipex_utils.c Mandatory/execution.c
 BONUS_SRCS = Bonus/pipex_bonus.c Bonus/pipex_bonus_utils.c Bonus/execution.c
 BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
 OBJS = $(SRCS:.c=.o)

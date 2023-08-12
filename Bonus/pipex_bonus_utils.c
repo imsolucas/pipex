@@ -6,15 +6,19 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/08/11 19:12:16 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/12 13:42:13 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/pipex_bonus.h"
 
+/*
+Child Process: calls the process to write or read
+dup2: Use to duplicate file descripter.
+*/
 void	child_process(t_pipex pipe, char *argv, char **envp, char *infile)
 {
-	if (pipe.idx == 3)
+	if (pipe.idx == 2)
 		close(pipe.fd[0]);
 	else
 		close(pipe.fd[1]);
@@ -22,6 +26,12 @@ void	child_process(t_pipex pipe, char *argv, char **envp, char *infile)
 	execute(argv, envp);
 }
 
+/*
+Parent Process: Process is passed in by child process to execute onwards
+				at the end of the process
+waitpid: Allows you to pause the parent process and wait for the child to
+			run finish the process
+*/
 void	parent_process(t_pipex pipe, char *argv, char **envp, char *outfile)
 {
 	int	status;
@@ -31,6 +41,10 @@ void	parent_process(t_pipex pipe, char *argv, char **envp, char *outfile)
 	dup2(pipe.fd[0], STDIN_FILENO);
 }
 
+/*checks for quotes or space
+  if checker finds ' ' or '\t return 0
+  else if checker finds '\'' or '\"" return (1)
+*/
 int	checker(char c)
 {
 	if (c == ' ' || c == '\t')
@@ -46,6 +60,7 @@ void	error_exit(char *str)
 	exit(1);
 }
 
+//free string
 void	free_string(char **str)
 {
 	int	i;

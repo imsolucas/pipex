@@ -6,13 +6,34 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/11 15:07:16 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/12 12:50:11 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/pipex_bonus.h"
 
-void	open_fd(t_pipex *pipe, char **argv, int argc)
+/*
+open_in_and_out : open file and set infile to RDONLY
+					and outfile to WRONLY, O_TRUNC and O_CREAT
+O_TRUNC : This flag indicates that if the file already exists,
+			its contents should be truncated (emptied)
+O_CREAT : This flag indicates that if the file doesn't exist,
+			it should be created
+
+Fork() : Fork and created 2 process the child and parent process
+Why fork():
+			Data Sharing: Pipe that was created before fork
+							is shared between the parent and child processes.
+			Communication: the parent and child processes can both access 
+							the pipe for communication.
+			Seperate Process: run two separate processes in parallel, each 
+							with its own execution context, memory space, and program counter.
+Child Process: PID is 0
+Parent Process: PID is more than 0
+PID: Process IDentification
+*/
+
+void	open_in_and_out(t_pipex *pipe, char **argv, int argc)
 {
 	pipe->outfile = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT, 0664);
 	if (pipe->outfile < 0)
@@ -29,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 		error_exit("Wrong arguments");
-	open_fd(&pipex, argv, argc);
+	open_in_and_out(&pipex, argv, argc);
 	pipex.idx = 2;
 	while (pipex.idx < (argc - 2))
 	{
