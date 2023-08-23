@@ -1,14 +1,19 @@
 NAME = pipex
+DNAME = d.out
 GCC = gcc
-FLAGS = -Wall -Wextra -Werror -ggdb -fsanitize=address
+FLAGS = -Wall -Wextra -Werror #-ggdb -fsanitize=address
+DFLAGS = -g3 -fsanitize=address
 
 SRCS = Mandatory/pipex.c Mandatory/pipex_utils.c Mandatory/execution.c
-BONUS_SRCS = Bonus/pipex_bonus.c Bonus/pipex_bonus_utils.c Bonus/execution.c
+BONUS_SRCS = Bonus/pipex_bonus.c Bonus/pipex_bonus_utils.c Bonus/execution.c Bonus/here_doc.c
 BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_MAKE = make all -C libft
 LIBFT_CP = cp libft/libft.a .
+
+GNL_MAKE = make all -C GetNextLine
+GNL_CP = cp GetNextLine/gnl.a .
 
 RM = rm -f
 
@@ -24,6 +29,8 @@ YELLOW = \033[93m
 
 all: $(NAME)
 
+d: $(DNAME)
+
 %.o: %.c
 	@$(GCC) -c $(CFLAGS) $< -o ${<:.c=.o}
 
@@ -35,29 +42,42 @@ $(NAME): $(OBJS)
 	@echo "\n\n"
 	@echo "$(YELLOW)now just ./pipex infile "cmd" "cmd2" outfile$(RESET)"
 
+$(DNAME): $(SRCS)
+	@${RM} $(BONUS_OBJS)
+	@$(LIBFT_MAKE)
+	@$(LIBFT_CP)
+	@$(GCC) $(FLAGS) $(DFLAGS) -o $(DNAME) $(SRCS) libft.a
+	@echo "\n\n"
+	@echo "$(YELLOW)now just ./pipex infile "cmd" "cmd2" outfile$(RESET)"
+
 bonus: ${BONUS_OBJS}
 	@${RM} $(OBJS)
 	@$(LIBFT_MAKE)
 	@$(LIBFT_CP)
-	@$(GCC) $(FLAGS) -o $(NAME) $(BONUS_OBJS) libft.a
+	@$(GNL_MAKE)
+	@$(GNL_CP)
+	@$(GCC) $(FLAGS) -g -o $(NAME) $(BONUS_OBJS) libft.a gnl.a
 	@echo "\n\n"
 	@echo "$(YELLOW)now just ./pipex infile "cmd" "cmd2" outfile$(RESET)"
 
 clean:
-	@$(RM) $(OBJS)
-	@$(RM) $(BONUS_OBJS)
+	$(RM) $(OBJS) $(BONUS_OBJS) libft.a gnl.a
+	@make fclean -C libft
+	@make fclean -C GetNextLine
 
 fclean:
 	@echo "$(BOLD)$(LIGHT_BLUE)Cleaning all .o files...$(REST)\n"
 	@$(RM) $(NAME)
+	@$(RM) $(DNAME)
 	@make fclean -C libft
+	@make fclean -C GetNextLine
 	@$(RM) libft.a
 	@make clean
 	@echo "\n$(BOLD)$(YELLOW)Clean Successfully$(RESET)"
 
 re: fclean all
 
-re_bonus: fclean bonus
+re_bonus: fclean bonus d
 
 files:
 	@touch infile
