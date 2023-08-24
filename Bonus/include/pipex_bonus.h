@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:40:34 by djin              #+#    #+#             */
-/*   Updated: 2023/08/23 20:44:43 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/24 09:45:08 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ typedef struct s_pipex
 	int		idx;
 	int		outfile;
 	int		infile;
-	char	**split_path;
 	char	*cmd;
 	char	**split_cmd;
 	char	*cmd_path;
-	char	**result;
 	pid_t	pid;
+	struct s_pipex	*next;
+	struct s_pipex	*prev;
 }			t_pipex;
 
 //processes
@@ -46,17 +46,16 @@ void	child_process(t_pipex pipe, char *argv, char **envp, char *infile);
 
 //execution
 char	*find_cmd_path(char *cmd, char **envp, t_pipex *pipe);
-char	**split_string(t_pipex *pipe);
-void	execute(char *cmd, char **envp);
+void	exec(char *cmd, char **envp);
 
 //utils
 int		checker(char c);
-void	free_string(char **str);
+void	free_split(char **str);
 void	error_exit(char *str);
 void	open_in_and_out(t_pipex *pipe, char **argv, int argc);
 
 //here_doc
-void	open_here_doc(t_pipex *pipe, char **argv, int argc);
-void	here_doc(char *limiter, t_pipex *pipes, char **argv, int argc);
+static void	open_here_doc(t_pipex *pipe, char **argv, int argc);
+void		here_doc(char *limiter, t_pipex *pipes, char **argv, int argc);
 
 #endif

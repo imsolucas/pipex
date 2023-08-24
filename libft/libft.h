@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:38:20 by djin              #+#    #+#             */
-/*   Updated: 2023/05/09 18:35:04 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/24 09:35:40 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ size_t		ft_strlen(const char *str);
 
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
-int			ft_strncmp(const char *str1, const char *str2, unsigned int n);
+int			ft_strncmp(char *s1, char *s2, size_t n);
 
 char		*ft_strnstr(const char	*str, const char *to_find, size_t len);
 

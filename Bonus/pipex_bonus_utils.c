@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/08/14 12:15:00 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/24 08:38:13 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	child_process(t_pipex pipe, char *argv, char **envp, char *infile)
 {
 	close(pipe.fd[0]);
 	dup2(pipe.fd[1], STDOUT_FILENO);
-	execute(argv, envp);
+	exec(argv, envp);
 }
 
 /*
@@ -56,15 +56,12 @@ void	error_exit(char *str)
 }
 
 //free string
-void	free_string(char **str)
+void	free_split(char **str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
+		free(str[i++]);
 	free(str);
 }

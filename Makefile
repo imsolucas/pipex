@@ -1,11 +1,11 @@
 NAME = pipex
 DNAME = d.out
 GCC = gcc
-FLAGS = -Wall -Wextra -Werror #-ggdb -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -ggdb -fsanitize=address
 DFLAGS = -g3 -fsanitize=address
 
 SRCS = Mandatory/pipex.c Mandatory/pipex_utils.c Mandatory/execution.c
-BONUS_SRCS = Bonus/pipex_bonus.c Bonus/pipex_bonus_utils.c Bonus/execution.c Bonus/here_doc.c
+BONUS_SRCS = Bonus/pipex_bonus.c Bonus/pipex_bonus_utils.c Bonus/exec.c Bonus/here_doc.c Bonus/linked_lst_utils.c
 BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
 OBJS = $(SRCS:.c=.o)
 
@@ -77,7 +77,9 @@ fclean:
 
 re: fclean all
 
-re_bonus: fclean bonus d
+re_bonus: fclean bonus
+
+re_d: fclean d
 
 files:
 	@touch infile
@@ -90,4 +92,4 @@ clean_files:
 	@rm outfile
 	@echo "$(BOLD)$(YELLOW)removed successfully :D$(RESET)"
 
-.PHONY: all clean fclean re files bonus clean_files re_bonus
+.PHONY: all clean fclean re files bonus clean_files re_bonus re_d d

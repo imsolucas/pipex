@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 12:34:44 by djin              #+#    #+#             */
-/*   Updated: 2023/07/23 20:24:54 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/24 08:50:15 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 	return (ft_substr(s1 + i, 0, length - i));
 }
 
-// int	main(void)
-// {
-// 	char	str[] = "        ";
+int	main(void)
+{
+	char	str[] = "Hello World";
 
-// 	printf("%s\n", ft_strtrim(str, " "));
-// }
+	printf("%s\n", ft_strtrim(str, ""));
+}

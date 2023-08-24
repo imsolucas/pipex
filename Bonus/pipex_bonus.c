@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/23 20:57:46 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/24 09:39:16 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,18 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	// if (argc < 5)
-	// 	error_exit("Wrong arguments");
-	// if (!(ft_strncmp(argv[1], "here_doc", 9)) && argc == 6)
-	// 	here_doc(argv[2], &pipex, argv, argc);
-	// else
-	// {
-	open_in_and_out(&pipex, argv, argc);
-	pipex.idx = 2;
-	// }
+	if (argc < 5)
+		error_exit("Wrong arguments");
+	if (!(ft_strncmp(argv[1], "here_doc", 9)) && argc == 6)
+	{
+		here_doc(argv[2], &pipex, argv, argc);
+		pipex.idx = 3;
+	}
+	else
+	{
+		open_in_and_out(&pipex, argv, argc);
+		pipex.idx = 2;
+	}
 	while (pipex.idx < (argc - 2))
 	{
 		if (pipe((pipex.fd)) == -1)
@@ -71,5 +74,5 @@ int	main(int argc, char **argv, char **envp)
 		pipex.idx++;
 	}
 	dup2(pipex.outfile, STDOUT_FILENO);
-	execute(argv[argc - 2], envp);
+	exec(argv[argc - 2], envp);
 }
