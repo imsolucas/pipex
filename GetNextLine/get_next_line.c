@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:41:00 by djin              #+#    #+#             */
-/*   Updated: 2023/08/23 20:23:25 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/24 10:42:34 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 char	*push_forward(char *buff)
 {
 	char	*str;
-	int		n_len; // new length = tmp[new_len]
+	int		n_len;
 	int		p_len;
-	
-	p_len = 0; //previous length
+
+	p_len = 0;
 	while (buff[p_len] != '\0' && buff[p_len] != '\n')
 		p_len++;
 	if (!buff[p_len])

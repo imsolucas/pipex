@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 08:11:27 by djin              #+#    #+#             */
-/*   Updated: 2023/08/24 08:54:37 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/24 10:40:28 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,8 @@ char	*get_path(char *cmd, char **envp)
 
 void	exec(char *cmd, char **envp)
 {
-	t_pipex pipe;
+	t_pipex	pipe;
 
-	// pipe = create_token(cmd);
 	pipe.split_cmd = ft_split(cmd, ' ');
 	pipe.cmd = pipe.split_cmd[0];
 	pipe.cmd_path = get_path(pipe.cmd, envp);

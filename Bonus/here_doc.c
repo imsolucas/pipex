@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:23:20 by djin              #+#    #+#             */
-/*   Updated: 2023/08/24 10:37:00 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/24 10:52:33 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	here_doc(char *limiter, t_pipex *pipes, char **argv, int argc)
 			if (!(ft_strncmp(line, limiter, ft_strlen(limiter))))
 				break ;
 			write(pipes->fd[0], line, ft_strlen(line));
-			// write(pipes->fd[0], "\n", 1);
 			free(line);
 		}
 		free(line);

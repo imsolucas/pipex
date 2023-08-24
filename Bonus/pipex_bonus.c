@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/24 09:39:16 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/24 10:50:28 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,8 @@ void	open_in_and_out(t_pipex *pipe, char **argv, int argc)
 	dup2(pipe->infile, STDIN_FILENO);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	pipe_exec(t_pipex pipex, char **argv, int argc, char **envp)
 {
-	t_pipex	pipex;
-
-	if (argc < 5)
-		error_exit("Wrong arguments");
-	if (!(ft_strncmp(argv[1], "here_doc", 9)) && argc == 6)
-	{
-		here_doc(argv[2], &pipex, argv, argc);
-		pipex.idx = 3;
-	}
-	else
-	{
-		open_in_and_out(&pipex, argv, argc);
-		pipex.idx = 2;
-	}
 	while (pipex.idx < (argc - 2))
 	{
 		if (pipe((pipex.fd)) == -1)
@@ -72,7 +58,24 @@ int	main(int argc, char **argv, char **envp)
 		else
 			parent_process(pipex, argv[pipex.idx], envp, argv[argc -1]);
 		pipex.idx++;
+	}	
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_pipex	pipex;
+
+	if (!(ft_strncmp(argv[1], "here_doc", 9)) && argc == 6)
+	{
+		here_doc(argv[2], &pipex, argv, argc);
+		pipex.idx = 3;
 	}
+	else
+	{
+		open_in_and_out(&pipex, argv, argc);
+		pipex.idx = 2;
+	}
+	pipe_exec(pipex, argv, argc, envp);
 	dup2(pipex.outfile, STDOUT_FILENO);
 	exec(argv[argc - 2], envp);
 }

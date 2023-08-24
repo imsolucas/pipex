@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:40:34 by djin              #+#    #+#             */
-/*   Updated: 2023/08/24 09:45:08 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/24 10:50:06 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,25 @@ typedef struct s_pipex
 	char	**split_cmd;
 	char	*cmd_path;
 	pid_t	pid;
-	struct s_pipex	*next;
-	struct s_pipex	*prev;
 }			t_pipex;
 
+//init
+void		pipe_exec(t_pipex pipex, char **argv, int argc, char **envp);
+
 //processes
-void	parent_process(t_pipex pipe, char *argv, char **envp, char *outfile);
-void	child_process(t_pipex pipe, char *argv, char **envp, char *infile);
+//out = outfile
+void		parent_process(t_pipex pipe, char *argv, char **envp, char *out);
+void		child_process(t_pipex pipe, char *argv, char **envp, char *infile);
 
 //execution
-char	*find_cmd_path(char *cmd, char **envp, t_pipex *pipe);
-void	exec(char *cmd, char **envp);
+char		*find_cmd_path(char *cmd, char **envp, t_pipex *pipe);
+void		exec(char *cmd, char **envp);
 
 //utils
-int		checker(char c);
-void	free_split(char **str);
-void	error_exit(char *str);
-void	open_in_and_out(t_pipex *pipe, char **argv, int argc);
+int			checker(char c);
+void		free_split(char **str);
+void		error_exit(char *str);
+void		open_in_and_out(t_pipex *pipe, char **argv, int argc);
 
 //here_doc
 static void	open_here_doc(t_pipex *pipe, char **argv, int argc);

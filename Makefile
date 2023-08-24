@@ -5,7 +5,7 @@ FLAGS = -Wall -Wextra -Werror -ggdb -fsanitize=address
 DFLAGS = -g3 -fsanitize=address
 
 SRCS = Mandatory/pipex.c Mandatory/pipex_utils.c Mandatory/execution.c
-BONUS_SRCS = Bonus/pipex_bonus.c Bonus/pipex_bonus_utils.c Bonus/exec.c Bonus/here_doc.c Bonus/linked_lst_utils.c
+BONUS_SRCS = Bonus/pipex_bonus.c Bonus/pipex_bonus_utils.c Bonus/exec.c Bonus/here_doc.c
 BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
 OBJS = $(SRCS:.c=.o)
 

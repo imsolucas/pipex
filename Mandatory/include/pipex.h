@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:40:34 by djin              #+#    #+#             */
-/*   Updated: 2023/08/12 13:00:09 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/24 10:39:21 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <stdbool.h>
 # include <sys/types.h>
 # include "../../libft/libft.h"
-
 
 typedef struct s_pipex
 {
