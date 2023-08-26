@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/08/24 08:38:13 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/26 12:58:39 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 Child Process: calls the process to write or read
 dup2: Use to duplicate file descripter.
 */
-void	child_process(t_pipex pipe, char *argv, char **envp, char *infile)
+void	child_process(t_pipex pipe, char *argv, char **envp)
 {
 	close(pipe.fd[0]);
 	dup2(pipe.fd[1], STDOUT_FILENO);
@@ -29,7 +29,7 @@ Parent Process: Process is passed in by child process to execute onwards
 waitpid: Allows you to pause the parent process and wait for the child to
 			run finish the process
 */
-void	parent_process(t_pipex pipe, char *argv, char **envp, char *outfile)
+void	parent_process(t_pipex pipe, char *argv, char **envp)
 {
 	waitpid(-1, NULL, 0);
 	close(pipe.fd[1]);

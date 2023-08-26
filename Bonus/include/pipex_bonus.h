@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:40:34 by djin              #+#    #+#             */
-/*   Updated: 2023/08/24 10:50:06 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/26 12:58:54 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void		pipe_exec(t_pipex pipex, char **argv, int argc, char **envp);
 
 //processes
 //out = outfile
-void		parent_process(t_pipex pipe, char *argv, char **envp, char *out);
-void		child_process(t_pipex pipe, char *argv, char **envp, char *infile);
+void		parent_process(t_pipex pipe, char *argv, char **envp);
+void		child_process(t_pipex pipe, char *argv, char **envp);
 
 //execution
 char		*find_cmd_path(char *cmd, char **envp, t_pipex *pipe);

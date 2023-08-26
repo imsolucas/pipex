@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/24 10:50:28 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/26 13:51:45 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,16 @@ void	open_in_and_out(t_pipex *pipe, char **argv, int argc)
 
 void	pipe_exec(t_pipex pipex, char **argv, int argc, char **envp)
 {
-	while (pipex.idx < (argc - 2))
-	{
-		if (pipe((pipex.fd)) == -1)
-			error_exit("Pipe ");
-		pipex.pid = fork();
-		if (pipex.pid == -1)
-			error_exit(FORK_FAIL);
-		if (pipex.pid == 0)
-			child_process(pipex, argv[pipex.idx], envp, argv[1]);
-		else
-			parent_process(pipex, argv[pipex.idx], envp, argv[argc -1]);
-		pipex.idx++;
-	}	
+	if (pipe((pipex.fd)) == -1)
+		error_exit("Pipe ");
+	pipex.pid = fork();
+	if (pipex.pid == -1)
+		error_exit(FORK_FAIL);
+	if (pipex.pid == 0)
+		child_process(pipex, argv[pipex.idx], envp);
+	else
+		parent_process(pipex, argv[pipex.idx], envp);
+	pipex.idx++;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -75,7 +72,19 @@ int	main(int argc, char **argv, char **envp)
 		open_in_and_out(&pipex, argv, argc);
 		pipex.idx = 2;
 	}
-	pipe_exec(pipex, argv, argc, envp);
+	while (pipex.idx < (argc - 2))
+	{
+		if (pipe((pipex.fd)) == -1)
+			error_exit("Pipe ");
+		pipex.pid = fork();
+		if (pipex.pid == -1)
+			error_exit(FORK_FAIL);
+		if (pipex.pid == 0)
+			child_process(pipex, argv[pipex.idx], envp);
+		else
+			parent_process(pipex, argv[pipex.idx], envp);
+		pipex.idx++;
+	}	
 	dup2(pipex.outfile, STDOUT_FILENO);
 	exec(argv[argc - 2], envp);
 }
