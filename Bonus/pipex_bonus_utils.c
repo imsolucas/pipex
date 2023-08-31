@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/08/26 12:58:39 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/31 08:24:59 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ dup2: Use to duplicate file descripter.
 void	child_process(t_pipex pipe, char *argv, char **envp)
 {
 	close(pipe.fd[0]);
+	printf("hi %d\n", pipe.fd[1]);
 	dup2(pipe.fd[1], STDOUT_FILENO);
+	printf("bye\n");
 	exec(argv, envp);
+	printf("execute failed\n");
 }
 
 /*
@@ -31,7 +34,9 @@ waitpid: Allows you to pause the parent process and wait for the child to
 */
 void	parent_process(t_pipex pipe, char *argv, char **envp)
 {
-	waitpid(-1, NULL, 0);
+	printf("waitin for child\n");
+	waitpid(pipe.pid, NULL, 0);
+	printf("chidl done\n");
 	close(pipe.fd[1]);
 	dup2(pipe.fd[0], STDIN_FILENO);
 }

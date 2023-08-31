@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/26 13:51:45 by djin             ###   ########.fr       */
+/*   Updated: 2023/08/31 08:22:17 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,26 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (pipe((pipex.fd)) == -1)
 			error_exit("Pipe ");
+		printf("read end: %d write_end: %d\n", pipex.fd[0], pipex.fd[1]);
+		printf("inside while loop\n");
 		pipex.pid = fork();
 		if (pipex.pid == -1)
 			error_exit(FORK_FAIL);
 		if (pipex.pid == 0)
+		{
+			printf("%d\n", pipex.idx);
 			child_process(pipex, argv[pipex.idx], envp);
+			printf("child done\n");
+		}
 		else
+		{
 			parent_process(pipex, argv[pipex.idx], envp);
+			printf("parent done\n");
+		}
+		printf("done fork\n");
 		pipex.idx++;
-	}	
+	}
+	printf("piping complete\n");
 	dup2(pipex.outfile, STDOUT_FILENO);
 	exec(argv[argc - 2], envp);
 }

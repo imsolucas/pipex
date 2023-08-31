@@ -1,7 +1,7 @@
 NAME = pipex
 DNAME = d.out
 GCC = gcc
-FLAGS = -Wall -Wextra -Werror #-ggdb -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -ggdb -fsanitize=address
 DFLAGS = -g3 -fsanitize=address
 
 SRCS = Mandatory/pipex.c Mandatory/pipex_utils.c Mandatory/execution.c
