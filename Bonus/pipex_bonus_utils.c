@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/08/31 08:24:59 by codespace        ###   ########.fr       */
+/*   Updated: 2023/09/05 21:35:12 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,45 @@
 Child Process: calls the process to write or read
 dup2: Use to duplicate file descripter.
 */
-void	child_process(t_pipex pipe, char *argv, char **envp)
+// void	child_process(t_pipex pipe, char *argv, char **envp)
+// {
+// 	int	fd[2];
+
+// 	close(fd[0]);
+// 	printf("hi %d\n", fd[1]);
+// 	dup2(pipe.fd[1], STDOUT_FILENO);
+// 	// printf("bye\n");
+// 	exec(argv, envp);
+// }
+
+void	processes(t_pipex pipes, char **argv, char **envp, int argc)
 {
-	close(pipe.fd[0]);
-	printf("hi %d\n", pipe.fd[1]);
-	dup2(pipe.fd[1], STDOUT_FILENO);
-	printf("bye\n");
-	exec(argv, envp);
-	printf("execute failed\n");
+	int	fd[2];
+
+	while (pipes.idx < (argc - 2))
+	{
+		if (pipe((fd)) == -1)
+			error_exit("Pipe ");
+		pipes.pid = fork();
+		if (pipes.pid == -1)
+			error_exit(FORK_FAIL);
+		if (pipes.pid == 0)
+		{
+			printf("%d\n", fd[0]);
+			close(fd[0]);
+			dup2(fd[1], STDOUT_FILENO);
+			exec(argv[pipes.idx], envp);
+		}
+		else
+		{
+			// printf("waitin for child\n");
+			waitpid(pipes.pid, NULL, 0);
+			// printf("chidl done\n");
+			close(fd[1]);
+			dup2(fd[0], STDIN_FILENO);		
+		}
+		pipes.idx++;
+	}
 }
 
 /*
@@ -32,14 +63,14 @@ Parent Process: Process is passed in by child process to execute onwards
 waitpid: Allows you to pause the parent process and wait for the child to
 			run finish the process
 */
-void	parent_process(t_pipex pipe, char *argv, char **envp)
-{
-	printf("waitin for child\n");
-	waitpid(pipe.pid, NULL, 0);
-	printf("chidl done\n");
-	close(pipe.fd[1]);
-	dup2(pipe.fd[0], STDIN_FILENO);
-}
+// void	parent_process(t_pipex pipe, char *argv, char **envp)
+// {
+// 	// printf("waitin for child\n");
+// 	waitpid(pipe.pid, NULL, 0);
+// 	// printf("chidl done\n");
+// 	close(pipe.fd[1]);
+// 	dup2(pipe.fd[0], STDIN_FILENO);
+// }
 
 /*checks for quotes or space
   if checker finds ' ' or '\t return 0

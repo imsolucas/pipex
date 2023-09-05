@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/08/31 08:22:17 by codespace        ###   ########.fr       */
+/*   Updated: 2023/09/05 21:29:52 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,6 @@ void	open_in_and_out(t_pipex *pipe, char **argv, int argc)
 	dup2(pipe->infile, STDIN_FILENO);
 }
 
-void	pipe_exec(t_pipex pipex, char **argv, int argc, char **envp)
-{
-	if (pipe((pipex.fd)) == -1)
-		error_exit("Pipe ");
-	pipex.pid = fork();
-	if (pipex.pid == -1)
-		error_exit(FORK_FAIL);
-	if (pipex.pid == 0)
-		child_process(pipex, argv[pipex.idx], envp);
-	else
-		parent_process(pipex, argv[pipex.idx], envp);
-	pipex.idx++;
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
@@ -72,30 +58,7 @@ int	main(int argc, char **argv, char **envp)
 		open_in_and_out(&pipex, argv, argc);
 		pipex.idx = 2;
 	}
-	while (pipex.idx < (argc - 2))
-	{
-		if (pipe((pipex.fd)) == -1)
-			error_exit("Pipe ");
-		printf("read end: %d write_end: %d\n", pipex.fd[0], pipex.fd[1]);
-		printf("inside while loop\n");
-		pipex.pid = fork();
-		if (pipex.pid == -1)
-			error_exit(FORK_FAIL);
-		if (pipex.pid == 0)
-		{
-			printf("%d\n", pipex.idx);
-			child_process(pipex, argv[pipex.idx], envp);
-			printf("child done\n");
-		}
-		else
-		{
-			parent_process(pipex, argv[pipex.idx], envp);
-			printf("parent done\n");
-		}
-		printf("done fork\n");
-		pipex.idx++;
-	}
-	printf("piping complete\n");
+	processes(pipex, argv, envp, argc);
 	dup2(pipex.outfile, STDOUT_FILENO);
 	exec(argv[argc - 2], envp);
 }

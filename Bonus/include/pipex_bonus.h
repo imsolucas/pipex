@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:40:34 by djin              #+#    #+#             */
-/*   Updated: 2023/08/31 06:35:32 by codespace        ###   ########.fr       */
+/*   Updated: 2023/09/05 21:20:13 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 typedef struct s_pipex
 {
 	int		fd[2];
-	int		fd_in;
-	int		fd_out;
 	int		idx;
 	int		outfile;
 	int		infile;
@@ -47,6 +45,7 @@ void		pipe_exec(t_pipex pipex, char **argv, int argc, char **envp);
 //out = outfile
 void		parent_process(t_pipex pipe, char *argv, char **envp);
 void		child_process(t_pipex pipe, char *argv, char **envp);
+void		processes(t_pipex pipes, char **argv, char **envp, int argc);
 
 //execution
 char		*find_cmd_path(char *cmd, char **envp, t_pipex *pipe);
@@ -61,5 +60,7 @@ void		open_in_and_out(t_pipex *pipe, char **argv, int argc);
 //here_doc
 static void	open_here_doc(t_pipex *pipe, char **argv, int argc);
 void		here_doc(char *limiter, t_pipex *pipes, char **argv, int argc);
+
+int			ft_strcmp(const char *s1, const char *s2);
 
 #endif
