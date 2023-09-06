@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/09/06 15:05:44 by djin             ###   ########.fr       */
+/*   Updated: 2023/09/06 16:44:53 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,6 @@ void	open_in_and_out(t_pipex *pipe, char **argv, int argc)
 	pipe->outfile = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	if (pipe->outfile < 0)
 		error_exit(argv[argc - 1]);
-	pipe->infile = open(argv[1], O_RDONLY);
-	if (pipe->infile < 0)
-		error_exit(argv[1]);
-	dup2(pipe->infile, STDIN_FILENO);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -49,17 +45,20 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex	pipes;
 	int		fd[2];
 
-	if (!(ft_strncmp(argv[1], "here_doc", 9)) && argc == 6)
+	if (argc < 5)
+		error_exit("Too few arguments");
+	if (!(ft_strncmp(argv[1], "here_doc", 9)))
 	{
 		here_doc(argv[2], &pipes, argv, argc);
 		pipes.idx = 3;
 	}
-	else
+	else if (argc > 5)
 	{
 		open_in_and_out(&pipes, argv, argc);
 		pipes.idx = 2;
 	}
 	processes(pipes, argv, envp, argc);
+	pipes.infile = open(argv[1], O_RDONLY, 0644);
 	dup2(pipes.outfile, STDOUT_FILENO);
 	exec(argv[argc - 2], envp);
 }

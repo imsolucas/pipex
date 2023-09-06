@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/09/06 14:40:15 by djin             ###   ########.fr       */
+/*   Updated: 2023/09/06 16:48:58 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	if (argc != 5)
-		perror("Wrong Arguments");
+	if (argc < 5)
+		error_exit("Too few arguments");
+	if (argc > 5)
+		error_exit("Too many arguments");
 	if (pipe((int *)(pipex.fd)) == -1)
 		error_exit("Pipe");
 	pipex.pid = fork();

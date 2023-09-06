@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/09/06 15:05:56 by djin             ###   ########.fr       */
+/*   Updated: 2023/09/06 16:45:18 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 void	open_child(t_pipex *pipe, char **argv, char **envp)
 {
 	pipe->infile = open(argv[pipe->idx], O_RDONLY);
-	if (pipe->infile < 0)
+	if (pipe->infile < 0 && pipe->idx == 2)
 		error_exit(argv[pipe->idx]);
-	dup2(pipe->infile, STDIN_FILENO);
 }
 
 void	processes(t_pipex pipes, char **argv, char **envp, int argc)
@@ -33,9 +32,10 @@ void	processes(t_pipex pipes, char **argv, char **envp, int argc)
 			error_exit(FORK_FAIL);
 		if (pipes.pid == 0)
 		{
-			// open_child(&pipes, argv, envp);
+			open_child(&pipes, argv, envp);
 			close(fd[0]);
 			dup2(fd[1], STDOUT_FILENO);
+			dup2(pipes.infile, STDIN_FILENO);
 			exec(argv[pipes.idx], envp);
 		}
 		else

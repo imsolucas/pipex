@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:23:20 by djin              #+#    #+#             */
-/*   Updated: 2023/09/06 14:55:42 by djin             ###   ########.fr       */
+/*   Updated: 2023/09/06 16:36:09 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	open_here_doc(t_pipex *pipes, char **argv, int argc)
 {
-	pipes->outfile = open(argv[argc - 1], O_WRONLY | O_CREAT, 0666);
+	pipes->outfile = open(argv[argc - 1], O_WRONLY | O_APPEND | O_CREAT, 0666);
 	if (pipes->outfile < 0)
 		error_exit(argv[argc - 1]);
 }
