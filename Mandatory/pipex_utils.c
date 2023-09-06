@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/08/26 12:55:34 by djin             ###   ########.fr       */
+/*   Updated: 2023/09/06 14:44:19 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ close: Close my read pipe to prevent resource leaks
 */
 void	child_process(t_pipex pipe, char *argv, char **envp, char *infile)
 {
-	pipe.infile = open(infile, O_RDONLY);
+	pipe.infile = open(infile, O_RDONLY, 0644);
+	if (pipe.infile < 0)
+		error_exit(infile);
 	close(pipe.fd[0]);
 	dup2(pipe.fd[1], STDOUT_FILENO);
 	dup2(pipe.infile, STDIN_FILENO);

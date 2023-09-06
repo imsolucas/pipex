@@ -6,7 +6,7 @@
 /*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/09/05 21:29:52 by djin             ###   ########.fr       */
+/*   Updated: 2023/09/06 15:05:44 by djin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,20 @@ void	open_in_and_out(t_pipex *pipe, char **argv, int argc)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_pipex	pipex;
+	t_pipex	pipes;
+	int		fd[2];
 
 	if (!(ft_strncmp(argv[1], "here_doc", 9)) && argc == 6)
 	{
-		here_doc(argv[2], &pipex, argv, argc);
-		pipex.idx = 3;
+		here_doc(argv[2], &pipes, argv, argc);
+		pipes.idx = 3;
 	}
 	else
 	{
-		open_in_and_out(&pipex, argv, argc);
-		pipex.idx = 2;
+		open_in_and_out(&pipes, argv, argc);
+		pipes.idx = 2;
 	}
-	processes(pipex, argv, envp, argc);
-	dup2(pipex.outfile, STDOUT_FILENO);
+	processes(pipes, argv, envp, argc);
+	dup2(pipes.outfile, STDOUT_FILENO);
 	exec(argv[argc - 2], envp);
 }
