@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/09/06 16:44:53 by djin             ###   ########.fr       */
+/*   Updated: 2023/09/09 08:35:33 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex	pipes;
 	int		fd[2];
 
-	if (argc < 5)
+	if (argc <= 4)
 		error_exit("Too few arguments");
 	if (!(ft_strncmp(argv[1], "here_doc", 9)))
 	{
 		here_doc(argv[2], &pipes, argv, argc);
 		pipes.idx = 3;
 	}
-	else if (argc > 5)
+	else if (argc >= 5)
 	{
 		open_in_and_out(&pipes, argv, argc);
 		pipes.idx = 2;

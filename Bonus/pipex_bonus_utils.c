@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/09/06 16:45:18 by djin             ###   ########.fr       */
+/*   Updated: 2023/09/09 08:49:02 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	open_child(t_pipex *pipe, char **argv, char **envp)
 {
-	pipe->infile = open(argv[pipe->idx], O_RDONLY);
+	pipe->infile = open(argv[1], O_RDONLY);
 	if (pipe->infile < 0 && pipe->idx == 2)
 		error_exit(argv[pipe->idx]);
 }
