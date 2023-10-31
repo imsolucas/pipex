@@ -6,17 +6,18 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:23:55 by djin              #+#    #+#             */
-/*   Updated: 2023/09/09 08:49:02 by root             ###   ########.fr       */
+/*   Updated: 2023/10/29 19:23:49 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/pipex_bonus.h"
 
-void	open_child(t_pipex *pipe, char **argv, char **envp)
+void	open_child(t_pipex *pipe, char **argv)
 {
 	pipe->infile = open(argv[1], O_RDONLY);
 	if (pipe->infile < 0 && pipe->idx == 2)
 		error_exit(argv[pipe->idx]);
+	dup2(pipe->infile, STDIN_FILENO);
 }
 
 void	processes(t_pipex pipes, char **argv, char **envp, int argc)
@@ -32,10 +33,8 @@ void	processes(t_pipex pipes, char **argv, char **envp, int argc)
 			error_exit(FORK_FAIL);
 		if (pipes.pid == 0)
 		{
-			open_child(&pipes, argv, envp);
 			close(fd[0]);
 			dup2(fd[1], STDOUT_FILENO);
-			dup2(pipes.infile, STDIN_FILENO);
 			exec(argv[pipes.idx], envp);
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djin <djin@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:40:34 by djin              #+#    #+#             */
-/*   Updated: 2023/09/06 15:04:29 by djin             ###   ########.fr       */
+/*   Updated: 2023/10/29 20:05:37 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void		parent_process(t_pipex pipe, char *argv, char **envp);
 void		child_process(t_pipex pipe, char *argv, char **envp);
 void		processes(t_pipex pipes, char **argv, char **envp, int argc);
 void		child_heredoc(char *limiter, int *fd);
-void		open_child(t_pipex *pipe, char **argv, char **envp);
 
 //execution
 char		*find_cmd_path(char *cmd, char **envp, t_pipex *pipe);

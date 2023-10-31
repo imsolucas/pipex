@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:56:52 by djin              #+#    #+#             */
-/*   Updated: 2023/09/09 08:35:33 by root             ###   ########.fr       */
+/*   Updated: 2023/10/29 19:23:26 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ void	open_in_and_out(t_pipex *pipe, char **argv, int argc)
 	pipe->outfile = open(argv[argc - 1], O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	if (pipe->outfile < 0)
 		error_exit(argv[argc - 1]);
+	pipe->infile = open(argv[1], O_RDONLY);
+	if (pipe->infile < 0 && pipe->idx == 2)
+		error_exit(argv[pipe->idx]);
+	dup2(pipe->infile, STDIN_FILENO);
 }
 
 int	main(int argc, char **argv, char **envp)
